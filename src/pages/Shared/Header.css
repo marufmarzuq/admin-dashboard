@@ -1,7 +1,8 @@
 header {
-    padding: 20px 0;
+    padding: 10px 0;
     background-color: white;
-    box-shadow: 0 0 10px 10px #dddddd4d;
+    box-shadow: 0 0 10px 10px #dddddd24;
+    margin-bottom: 20px;
 }
 header .container {
     display: flex;
