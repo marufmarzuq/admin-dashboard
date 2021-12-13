@@ -19,6 +19,7 @@ const Register = () => {
         const email = data.email;
         const password = data.password;
         const name = data.name;
+        const gender = data.gender;
         if (password.length < 6) {
             setError("Password should be at least 6 characters long");
             return;
@@ -26,9 +27,11 @@ const Register = () => {
         createAccountWithEmailPassword(auth, email, password)
             .then((result) => {
                 // Create user in database
+                // 
                 const setUserName = () => {
                     updateProfile(auth.currentUser, {
                         displayName: name,
+                        photoURL: `https://avatars.dicebear.com/api/avataaars/${gender}/${name}.svg?style=circle&background=%231082ff`
                     }).then((result) => {});
                 };
                 setUserName();
@@ -76,10 +79,10 @@ const Register = () => {
                             <input type="password" placeholder="Password" {...register("password", {})} />
                             <div className="gender">
                                 <span>Gender:</span>
-                                <input {...register("geder", { required: true })} id="male" type="radio" value="male" />
+                                <input {...register("gender", { required: true })} id="male" type="radio" value="male" />
                                 <label for="male">Male</label>
                                 <input
-                                    {...register("geder", { required: true })}
+                                    {...register("gender", { required: true })}
                                     id="female"
                                     type="radio"
                                     value="female"

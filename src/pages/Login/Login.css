@@ -8,10 +8,6 @@ h1.form-title {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
-.login-img {
-    padding: 50px;
-    overflow: hidden;
-}
 .login-img img {
     width: 100%;
 }
@@ -55,4 +51,18 @@ input[type="submit"] {
 }
 .gender label {
     cursor: pointer;
+}
+.login-img {
+    padding: 0 50px;
+    overflow: hidden;
+}
+@media (max-width: 800px) {
+    .login .container,
+    .register .container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .login-img {
+        display: none;
+    }
 }

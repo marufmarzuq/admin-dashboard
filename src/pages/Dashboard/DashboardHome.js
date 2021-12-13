@@ -10,11 +10,13 @@ const DashboardHome = () => {
             .then((res) => res.json())
             .then((data) => setAdmin(data.admin));
     }, [user.email]);
+    console.log(user);
     return (
         <div className="container dashboard-home">
+            <img src={user.photoURL} alt="" style={{ width: "150px" }} />
             <h1>welcome {user.displayName}</h1>
             {!admin ? (
-                <h3>Please Login with Admin Email for access Dashboard</h3>
+                <h3>Please login with Admin Email for access Dashboard !</h3>
             ) : (
                 <Link to="/dashboard">Go to dashboard</Link>
             )}
