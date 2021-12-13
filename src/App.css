@@ -12,3 +12,12 @@ a {
     margin: 0 auto;
     padding: 0 20px;
 }
+.container.dashboard-home {
+    width: 100%;
+    text-align: center;
+    margin-top: 30vh;
+}
+
+.container.dashboard-home h1 {
+    margin-bottom: 15px;
+}

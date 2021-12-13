@@ -1,34 +1,17 @@
 import React from "react";
-import { Spinner } from "react-bootstrap";
-import { Redirect, Route } from "react-router";
+import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const PrivateRoute = ({ children, ...rest }) => {
     const { user, isLoading } = useAuth();
+    let location = useLocation();
     if (isLoading) {
-        return (
-            <div className="d-flex justify-content-center align-items-center vw-100 vh-100">
-                <Spinner animation="border" variant="info" />
-            </div>
-        );
+        return <h4>Loading...</h4>;
     }
-    return (
-        <Route
-            {...rest}
-            render={({ location }) =>
-                user.email ? (
-                    children
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: "/login",
-                            state: { from: location },
-                        }}
-                    />
-                )
-            }
-        />
-    );
+    if (user.email) {
+        return children;
+    }
+    return <Navigate to="/" state={{ from: location }} />;
 };
 
 export default PrivateRoute;

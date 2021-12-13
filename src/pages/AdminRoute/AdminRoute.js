@@ -1,29 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Redirect, Route } from "react-router";
+import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const AdminRoute = ({ children, ...rest }) => {
-    const { user, isLoading, admin } = useAuth();
+    const { user, isLoading } = useAuth();
+    const [admin, setAdmin] = useState();
+    useEffect(() => {
+        fetch(`http://localhost:5000/users/${user.email}`)
+            .then((res) => res.json())
+            .then((data) => setAdmin(data.admin));
+    }, [user.email]);
+    let location = useLocation();
     if (isLoading) {
-        return <h3>Loding...</h3>;
+        return <h4>Loading...</h4>;
     }
-    return (
-        <Route
-            {...rest}
-            render={({ location }) =>
-                user.email && admin ? (
-                    children
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: "/",
-                            state: { from: location },
-                        }}
-                    />
-                )
-            }
-        />
-    );
+    if (user.email && admin) {
+        return children;
+    }
+    return <Navigate to="/" state={{ from: location }} />;
 };
 
 export default AdminRoute;
