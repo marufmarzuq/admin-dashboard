@@ -10,6 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import "./Dashboard.css";
 
 const columns = [
+    { id: "id", label: "#", minWidth: 15 },
     { id: "customer_name", label: "Customer Name", minWidth: 150 },
     { id: "mobile", label: "Mobile", minWidth: 110 },
     { id: "email", label: "Email", minWidth: 250 },
@@ -23,6 +24,7 @@ const columns = [
 ];
 
 function createData(
+    id,
     customer_name,
     mobile,
     email,
@@ -36,6 +38,7 @@ function createData(
 ) {
     const status = order_status ? "delivered" : "pending";
     return {
+        id,
         customer_name,
         mobile,
         email,
