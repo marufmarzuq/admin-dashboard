@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import useAuth from "../../../hooks/useAuth";
 import "./MakeAdmin.css";
 
 const MakeAdmin = () => {
+    const { user } = useAuth();
     const [error, setError] = useState("");
     const {
         register,
@@ -11,7 +13,11 @@ const MakeAdmin = () => {
         formState: { errors },
     } = useForm();
     const onSubmit = (data) => {
-        fetch("http://localhost:5000/users/admin", {
+        if (data.email === user.email) {
+            setError("This user is already an admin");
+            return;
+        }
+        fetch("https://rocky-dawn-74128.herokuapp.com/users/admin", {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
