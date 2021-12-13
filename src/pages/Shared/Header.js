@@ -1,8 +1,10 @@
 import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Header = () => {
+    const { user, logOut } = useAuth();
     return (
         <header>
             <div className="container">
@@ -10,9 +12,22 @@ const Header = () => {
                     <Link to="/">Admin Dashboard</Link>
                 </div>
                 <div>
-                    <Link to="/login">
-                        <button className="header-login-btn">Login</button>
-                    </Link>
+                    {user.email ? (
+                        <div>
+                            <Link style={{ marginRight: "20px" }} to="/make-admin">
+                                Make Admin
+                            </Link>
+                            <Link to="/login">
+                                <button onClick={logOut} className="header-login-btn">
+                                    Log out
+                                </button>
+                            </Link>
+                        </div>
+                    ) : (
+                        <Link to="/login">
+                            <button className="header-login-btn">Login</button>
+                        </Link>
+                    )}
                 </div>
             </div>
         </header>

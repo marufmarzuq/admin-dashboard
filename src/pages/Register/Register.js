@@ -1,16 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import img from "../../assets/images/login.jpg";
+import useAuth from "../../hooks/useAuth";
 
 const Register = () => {
+    const [error, setError] = useState("");
+    const { createAccountWithEmailPassword, auth, setUser, updateProfile, logOut } = useAuth();
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm();
-    const onSubmit = (data) => console.log(data);
-    console.log(errors);
+
+    const onSubmit = (data) => {
+        const email = data.email;
+        const password = data.password;
+        const name = data.name;
+        if (password.length < 6) {
+            setError("Password should be at least 6 characters long");
+            return;
+        }
+        createAccountWithEmailPassword(auth, email, password)
+            .then((result) => {
+                // Create user in database
+                const setUserName = () => {
+                    updateProfile(auth.currentUser, {
+                        displayName: name,
+                    }).then((result) => {});
+                };
+                setUserName();
+                const saveUser = (displayName, email) => {
+                    const user = { displayName, email };
+                    fetch("http://localhost:5000/users", {
+                        method: "POST",
+                        headers: {
+                            "content-type": "application/json",
+                        },
+                        body: JSON.stringify(user),
+                    })
+                        .then((res) => res.json())
+                        .then((result) => {
+                            console.log(result);
+                        });
+                };
+                saveUser(name, email);
+                // Create user in database finish
+
+                setError("");
+                setUser("");
+                logOut();
+                alert("Account created successfuly");
+                navigate("/login");
+                reset();
+            })
+            .catch((error) => {
+                setError(error.message);
+            });
+    };
     return (
         <div className="register">
             <div className="container">
@@ -37,6 +86,7 @@ const Register = () => {
                                 />
                                 <label for="female">Female</label>
                             </div>
+                            <p style={{ paddingBottom: "15px", color: "red" }}>{error}</p>
                             <input type="submit" value="Register" />
                         </form>
                         <p>

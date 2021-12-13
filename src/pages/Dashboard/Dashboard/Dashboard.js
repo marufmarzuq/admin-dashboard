@@ -53,7 +53,7 @@ const Dashboard = () => {
     // Data fetching..
     const [tableData, setTableData] = React.useState([]);
     React.useEffect(() => {
-        fetch("./data.json")
+        fetch("http://localhost:5000/orders")
             .then((res) => res.json())
             .then((data) => setTableData(data));
     }, []);
