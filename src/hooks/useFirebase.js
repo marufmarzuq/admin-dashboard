@@ -51,7 +51,7 @@ const useFirebase = () => {
         });
     }, []);
     useEffect(() => {
-        fetch(`https://gentle-forest-53652.herokuapp.com/users/${user.email}`)
+        fetch(`http://localhost:5000/users/${user.email}`)
             .then((res) => res.json())
             .then((data) => setAdmin(data.admin));
     }, [user.email]);

@@ -4,13 +4,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Header = () => {
-    const { user, logOut } = useAuth();
-    const [admin, setAdmin] = useState();
-    useEffect(() => {
-        fetch(`http://localhost:5000/users/${user.email}`)
-            .then((res) => res.json())
-            .then((data) => setAdmin(data.admin));
-    }, [user.email]);
+    const { user, logOut, admin } = useAuth();
     return (
         <header>
             <div className="container">
